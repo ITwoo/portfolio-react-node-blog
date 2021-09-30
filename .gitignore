@@ -27,3 +27,4 @@ yarn-error.log*
 /back/config
 /back/uploads
 /**/node_modules
+/test
