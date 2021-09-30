@@ -1,0 +1,12 @@
+.custom {
+  float: right;
+  width: 10%;
+  margin: 1% !important;
+  padding-top: 10%;
+  position: relative;
+  min-width: 60px;
+}
+
+p {
+  margin: 0 !important;
+}

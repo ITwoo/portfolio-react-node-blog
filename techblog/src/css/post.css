@@ -1,0 +1,10 @@
+.postButton {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 1%;
+}
+
+.postCustom {
+  margin: 1%;
+}

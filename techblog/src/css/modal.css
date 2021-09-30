@@ -1,0 +1,46 @@
+.ReactModal__Content {
+  width: 50%;
+}
+
+.ReactModal__Content button {
+  float: right;
+}
+
+.ReactModal__Overlay {
+  z-index: 2;
+}
+
+#FormControlSelectModal {
+  -webkit-appearance:auto; /* 화살표 없애기 for chrome*/ 
+  -moz-appearance:auto; /* 화살표 없애기 for firefox*/ 
+  appearance:auto; /* 화살표 없애기 공통*/
+}
+
+.btn-modal1 {
+  width: 100%;
+  background-color:#44c767;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+
+.btn-modal2 {
+  background-color:#44c767;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
