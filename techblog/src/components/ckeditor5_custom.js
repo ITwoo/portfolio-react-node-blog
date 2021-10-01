@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -14,11 +14,19 @@ import ModalComponent from './modal';
 
 
 const Ckeditor5_custom = ({ post, id }) => {
+  console.log(post)
   const [category, setCategory] = useState('카테고리 없음');
   const [content, setContent] = useState('');
   const [CKBool, setCKBool] = useState(true);
   // const post = useSelector((state) => state.post);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('render')
+    if(post){
+      setCategory(post.Category.kinds)
+    }
+  },[])
   const onWrite = useCallback(() => {
     if (id === undefined) {
       dispatch({

@@ -1,9 +1,20 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_USER_REQUEST, LOGOUT_REQUEST } from '../actionTypes/user';
 
 
 const Layout = ({ children }) => {
+  const dispatch = useDispatch();
+  const info = useSelector((state) => state.user.info)
   const toggleRef = useRef();
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_USER_REQUEST
+    })
+  },[])
+
   const onChangeToggle = useCallback((event) => {
     event.preventDefault();
     if (toggleRef.current) {
@@ -14,6 +25,12 @@ const Layout = ({ children }) => {
 
   const buttonRef = useRef();
   const navSupportRef = useRef();
+  const onClickLogOut = useCallback(() => {
+    dispatch({
+      type: LOGOUT_REQUEST
+    })
+  },[])
+
   const onNavButtonClick = useCallback((event) => {
     event.preventDefault();
     if (buttonRef.current) {
@@ -72,7 +89,11 @@ const Layout = ({ children }) => {
               <div className="collapse navbar-collapse" id="navbarSupportedContent" ref={navSupportRef}>
                 <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
                   <li className="nav-item active"><Link className="nav-link" to="#!">Home</Link></li>
-                  <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+                  {
+                    info === null ? <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+                    : <li className="nav-item"><Link className="nav-link" to="/" onClick={onClickLogOut}>Logout</Link></li>
+
+                  }
                   <li className="nav-item">
                     <Link className="nav-link" to="/">목록</Link>
                   </li>

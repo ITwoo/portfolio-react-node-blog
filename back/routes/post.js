@@ -46,18 +46,22 @@ router.post('/write', isLoggedIn, async (req, res, next) => { //write
   // console.log(start, end)
   var list = data.substring(start + 1, end);
   // console.log(list)
-  const post = await Post.create({ 
+  const post = await Post.create({
     content: data,
     UserId: req.user.id,
-   });
+  });
   if (index !== -1) {
     const image = await Image.create({ src: list });
     await post.addImages(image);
-  } else{
+  } else {
     const image = await Image.create({ src: 'https://via.placeholder.com/250x150/00CED1/000000' });
     await post.addImages(image);
   }
-  const category = await Category.create({ kinds: ctgr })
+  const [category, created] = await Category.findOrCreate({
+    where: { kinds: ctgr },
+  })
+  console.log(category)
+  console.log(created)
   await category.addPost(post);
   const fullPost = await Post.findAll({
     include: [{
@@ -65,7 +69,7 @@ router.post('/write', isLoggedIn, async (req, res, next) => { //write
     }, {
       model: Category
     }],
-    order: [['id','DESC']]
+    order: [['id', 'DESC']]
   });
   // const fullPost = await Post.findAll();  
   res.status(201).json(fullPost);
@@ -102,15 +106,19 @@ router.post('/contents', async (req, res, next) => { //read many
     }, {
       model: Category
     }],
-    order: [['id','DESC']]
+    order: [['id', 'DESC']]
   });
   // console.log(fullPost)
   res.status(201).json(fullPost);
 });
 
-router.post('/update', async (req, res, next) => {
+router.post('/update', isLoggedIn, async (req, res, next) => {
   console.log(req.body)
-  await Post.update({ content: req.body.content, category: req.body.category }, {
+  const [category, created] = await Category.findOrCreate({
+    where: { kinds: req.body.category },
+  });
+
+  const post = await Post.update({ content: req.body.content, CategoryId: category.id }, {
     where: {
       id: req.body.id
     }
@@ -126,12 +134,13 @@ router.post('/update', async (req, res, next) => {
       attributes: {
         exclude: ['password']
       }
-    }]
+    }],
+    order: [['id', 'DESC']]
   });
   res.status(201).json(fullPost);
 });
 
-router.post('/delete', async (req, res, next) => {
+router.post('/delete', isLoggedIn, async (req, res, next) => {
   await Post.destroy({
     where: {
       id: req.body.id

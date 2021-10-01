@@ -10,7 +10,7 @@ const flash = require('connect-flash');
 
 const postRouter = require('./routes/post')
 const authRouter = require('./routes/auth');
-// const pageRouter = require('./routes/page');
+const userRouter = require('./routes/user');
 
 const db = require('./models');
 const passportConfig = require('./passport');
@@ -52,16 +52,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.get('/', (req, res, next) => {
-  console.log(__dirname)
-  res.send(`
-    'hello express'
-  `)
-});
+// app.get('/', (req, res, next) => {
+//   console.log(__dirname)
+//   res.send(`
+//     'hello express'
+//   `)
+// });
 
 // app.use('/', pageRouter);
 app.use('/auth', authRouter);
 app.use('/post', postRouter)
+app.use('/user', userRouter)
 
 app.listen(8080, () => {
   console.log('서버 실행 중!');

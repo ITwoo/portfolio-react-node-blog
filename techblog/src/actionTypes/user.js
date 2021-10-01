@@ -13,3 +13,9 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const JOIN_REQUEST = 'JOIN_REQUEST';
 export const JOIN_SUCCESS = 'JOIN_SUCCESS';
 export const JOIN_FAILURE = 'JOIN_FAILURE';
+
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+
+
