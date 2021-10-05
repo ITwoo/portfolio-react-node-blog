@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_USER_REQUEST, LOGOUT_REQUEST } from '../actionTypes/user';
 
 
 const Layout = ({ children }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const info = useSelector((state) => state.user.info)
   const toggleRef = useRef();
@@ -25,10 +27,13 @@ const Layout = ({ children }) => {
 
   const buttonRef = useRef();
   const navSupportRef = useRef();
+
   const onClickLogOut = useCallback(() => {
     dispatch({
       type: LOGOUT_REQUEST
     })
+
+    history.push('/')
   },[])
 
   const onNavButtonClick = useCallback((event) => {

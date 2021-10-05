@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { useHistory } from 'react-router';
 
 // NOTE: Use the editor from source (not a build)!
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
@@ -14,7 +15,8 @@ import ModalComponent from './modal';
 
 
 const Ckeditor5_custom = ({ post, id }) => {
-  console.log(post)
+  const history = useHistory();
+  const info = useSelector((state) => state.user.info);
   const [category, setCategory] = useState('카테고리 없음');
   const [content, setContent] = useState('');
   const [CKBool, setCKBool] = useState(true);
@@ -25,8 +27,14 @@ const Ckeditor5_custom = ({ post, id }) => {
     console.log('render')
     if(post){
       setCategory(post.Category.kinds)
+      console.log(post)
+    }
+
+    if(info === null){
+      history.push('/')
     }
   },[])
+
   const onWrite = useCallback(() => {
     if (id === undefined) {
       dispatch({
@@ -62,7 +70,7 @@ const Ckeditor5_custom = ({ post, id }) => {
         onReady={editor => {
           // You can store the "editor" and use when it is needed.
           console.log('Editor is ready to use!', editor);
-          if (post) {
+          if (post && editor) {
             console.log(post)
             editor.setData(post.content);
           }
@@ -70,6 +78,7 @@ const Ckeditor5_custom = ({ post, id }) => {
         onChange={(event, editor) => {
           setContent(editor.getData());
           console.log(category)
+          console.log(content)
           // setCategory(editor)
           // console.log({ event, editor, data });
         }}

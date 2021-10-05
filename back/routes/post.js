@@ -41,11 +41,9 @@ router.post('/write', isLoggedIn, async (req, res, next) => { //write
   const ctgr = req.body.category;
   console.log(req.body);
   const index = data.indexOf("<img");
-  const start = data.indexOf('"', index + 1);
-  const end = data.indexOf('"', start + 1);
-  // console.log(start, end)
-  var list = data.substring(start + 1, end);
-  // console.log(list)
+  const start = data.indexOf('src="', index + 1);
+  const end = data.indexOf('"', start + 6);
+  var list = data.substring(start + 5, end);
   const post = await Post.create({
     content: data,
     UserId: req.user.id,
@@ -113,7 +111,13 @@ router.post('/contents', async (req, res, next) => { //read many
 });
 
 router.post('/update', isLoggedIn, async (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body.content)
+  const data = req.body.content;
+  const index = data.indexOf("<img");
+  const start = data.indexOf('src="', index + 1);
+  const end = data.indexOf('"', start + 6);
+  var list = data.substring(start + 5, end);
+  console.log(list)
   const [category, created] = await Category.findOrCreate({
     where: { kinds: req.body.category },
   });
@@ -123,7 +127,12 @@ router.post('/update', isLoggedIn, async (req, res, next) => {
       id: req.body.id
     }
   });
-
+  if (index !== -1) {
+    await Image.destroy({
+    where: { src: 'https://via.placeholder.com/250x150/00CED1/000000', PostId: req.body.id }
+  });
+    await Image.findOrCreate({ where: {src: list, PostId: req.body.id} });
+  }
   const fullPost = await Post.findAll({
     include: [{
       model: Image

@@ -1,6 +1,5 @@
+/*  로그인 유무 검사 미들웨어- 2021 10 04 ITwoo */
 exports.isLoggedIn = (req, res, next) => {
-  // console.log(req.isAuthenticated())
-  // console.log(req.user)
   if(req.isAuthenticated()){
     next();
   } else {
@@ -10,7 +9,6 @@ exports.isLoggedIn = (req, res, next) => {
 };
 
 exports.isNotLoggedIn = (req, res, next) => {
-  // console.log(req.isAuthenticated())
   if(!req.isAuthenticated()){
     next();
   } else {

@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const { User } = require('../models');
 
 module.exports = () => {
-  passport.use(new LocalStrategy({
+  passport.use(new LocalStrategy({ //DB에 접근해서 회원 정보 확인 - 2021 10 04 ITwoo
     usernameField: 'email',
     passwordField: 'password',
   }, async (email, password, done) => {

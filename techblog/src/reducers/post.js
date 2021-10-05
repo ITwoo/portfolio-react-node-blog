@@ -20,7 +20,10 @@ import {
 
 const initalState = {
   id: 0,
-  post: { content: '<div>NOT FOUND</div>' },
+  post: {
+    content: '<div>NOT FOUND</div>',
+    Category: { kinds: '' },
+  },
   posts: [{ content: '<div>NOT FOUND</div>' }],
   loading: false
 };

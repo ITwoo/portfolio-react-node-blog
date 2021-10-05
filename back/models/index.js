@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; // sequelize.org 공식홈페이지 참조 - 2021 10 04 ITwoo
 
 const fs = require('fs');
 const path = require('path');

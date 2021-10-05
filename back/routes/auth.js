@@ -1,3 +1,4 @@
+/* 회원 가입, 로그인, 로그아웃 처리 라우터 - 2021 10 04 ITwoo*/
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
@@ -6,7 +7,7 @@ const { User, Post } = require('../models');
 
 const router = express.Router();
 
-router.post('/join', isNotLoggedIn, async (req, res, next) => {
+router.post('/join', isNotLoggedIn, async (req, res, next) => { // 회원가입 - 2021 10 04 ITwoo
   const { username, email, password } = req.body;
   console.log(username, email, password)
   try {
@@ -29,17 +30,13 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
   }
 });
 
-router.post('/login', isNotLoggedIn, (req, res, next) => {
+router.post('/login', isNotLoggedIn, (req, res, next) => { // 로그인 - 2021 10 04 ITwoo
   passport.authenticate('local', (authError, user, info) => { //custom callback
-    console.log(user)
-    console.log(info)
-    console.log(authError);
     if(authError) {
       console.error(authError);
       return next(authError);
     }
     if(!user) {
-      console.log('a')
       req.flash('loginError', info.message);
       return res.status(401).send(info);
     }
@@ -63,7 +60,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/logout', isLoggedIn, (req, res) =>{
+router.get('/logout', isLoggedIn, (req, res) =>{ // 로그아웃 - 2021 10 04 ITwoo
   req.logout();
   req.session.destroy();
   res.status(200).send('LOGOUT')
