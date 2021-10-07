@@ -103,7 +103,7 @@ const Post_list = () => {
 
     console.log(currentPage)
     console.log(currentPost)
-    return currentPost.map((p) => {
+    return currentPost.map((p,i) => {
       const category = p.Category && p.Category !== undefined ? p.Category.kinds : ''
       const id = "/post/" + p.id;
       // console.log(p.Images);
@@ -134,11 +134,11 @@ const Post_list = () => {
         content = content.replaceAll('&gt;', '>');
       }
       return (
-        <article>
+        <article key={i}>
           <div className="line-item hf-item-odd clearfix">
             <div className="content-image">
               <Link className="image-link article-link" to={id}>
-                <img className="img-thumbnail list_img" src={src} />
+                <img className="img-thumbnail list_img" src={src} alt=""/>
                 <span className="overlay article-overlay"></span>
               </Link>
             </div>
@@ -185,11 +185,11 @@ const Post_list = () => {
         <div>
           {list()}
         </div>
-        <div class="pagination">
+        <div className="pagination">
           <Link to="">&laquo;</Link>
           {
-            pages.map((i) =>
-              <Link to={paginationParam} className={parseInt(currentPage) === i ? "active" : ''} onClick={onClickPagination} id={i}>{i}</Link>
+            pages.map((p, i) =>
+              <Link to={paginationParam} className={parseInt(currentPage) === p ? "active" : ''} onClick={onClickPagination} id={p} key={i}>{p}</Link>
             )
           }
           <Link to="">&raquo;</Link>

@@ -1,3 +1,4 @@
+/* 게시글 관련 라우터 - 2021 10 04 ITwoo */
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -9,14 +10,14 @@ const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
-try {
+try { // uploads 폴더 확인 및 생성코드 - 2021 10 04 ITwoo
   fs.accessSync('uploads');
 } catch (error) {
   console.log('uploads 폴더가 없으므로 생성합니다.')
   fs.mkdirSync('uploads');
 }
 
-const storage = multer.diskStorage({
+const storage = multer.diskStorage({ // multer를 사용해 이미지 업로드 - 2021 10 04 ITwoo
   destination: function (req, file, cb) {
     cb(null, 'uploads')
   },
@@ -32,11 +33,10 @@ const upload = multer({
 });
 
 router.get('/', (req, res, next) => {
-  console.log('hello test1');
-  console.log(req.body.data);
+  res.send('hello post')
 });
 
-router.post('/write', isLoggedIn, async (req, res, next) => { //write
+router.post('/write', isLoggedIn, async (req, res, next) => { //글 쓰기  - 2021 09 04 ITwoo
   const data = req.body.content;
   const ctgr = req.body.category;
   console.log(req.body);

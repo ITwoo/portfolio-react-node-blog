@@ -96,7 +96,7 @@
   background: url("https://bootdey.com/img/Content/border-top-dotted.gif") repeat-x scroll left bottom rgba(0, 0, 0, 0);
   margin: 0 0 0 30px;
   padding: 25px 0 15px;
-  min-height: 246px;
+  min-height: 200px;
 }
 @media (min-width: 500px){
   .content-image {

@@ -103,7 +103,7 @@ const Layout = ({ children }) => {
                     <Link className="nav-link" to="/">목록</Link>
                   </li>
                   <li className="nav-item dropdown">
-                    <Link className="nav-link dropdown-toggle" id="navbarDropdown" href="" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ref={dropDownRef} onClick={onDropDownChange}>글 관리</Link>
+                    <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ref={dropDownRef} onClick={onDropDownChange}>글 관리</Link>
                     <div className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" ref={dropDownMenuRef}>
                       <Link className="dropdown-item" to="/revise">글 수정</Link>
                       <Link className="dropdown-item" to="/write">글 쓰기</Link>

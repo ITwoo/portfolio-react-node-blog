@@ -31,7 +31,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => { // 회원가입 
 });
 
 router.post('/login', isNotLoggedIn, (req, res, next) => { // 로그인 - 2021 10 04 ITwoo
-  passport.authenticate('local', (authError, user, info) => { //custom callback
+  passport.authenticate('local', (authError, user, info) => { //custom callback, 회원 확인 (회원가입에러, 유저 정보, 메세지정보) - 2021 10 06 ITwoo
     if(authError) {
       console.error(authError);
       return next(authError);

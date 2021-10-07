@@ -50,16 +50,13 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+// app.use(flash());
 
-// app.get('/', (req, res, next) => {
-//   console.log(__dirname)
-//   res.send(`
-//     'hello express'
-//   `)
-// });
+app.get('/', (req, res, next) => {
+  res.send('hello express');
+});
 
-// app.use('/', pageRouter);
+// // app.use('/', pageRouter);
 app.use('/auth', authRouter);
 app.use('/post', postRouter)
 app.use('/user', userRouter)

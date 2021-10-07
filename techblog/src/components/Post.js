@@ -27,6 +27,7 @@ const Post = () => {
         if (v.id === parseInt(p.id)) {
           setPassport(true)
         }
+        return 0;
       })
     }
   }, [p.id, info])
