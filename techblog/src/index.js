@@ -12,9 +12,11 @@ import store from './reducers/store';
 ReactDOM.render(
   <Provider store={store}>
     {/* <PersistGate loading={null} persistor={persistor}> */}
-    <Router basename={process.env.PUBLIC_URL}>
-      <App />
-    </Router>
+    <React.StrictMode>
+      <Router basename={process.env.PUBLIC_URL}>
+        <App />
+      </Router>
+    </React.StrictMode>,
     {/* </PersistGate> */}
   </Provider>,
   document.getElementById("root")
