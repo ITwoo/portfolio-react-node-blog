@@ -113,7 +113,7 @@ router.post('/contents', async (req, res, next) => { //read many
 router.post('/update', isLoggedIn, async (req, res, next) => {
   console.log(req.body.content)
   const data = req.body.content;
-  const index = data.indexOf("<img");
+  const index = data.lastIndexOf("<img");
   const start = data.indexOf('src="', index + 1);
   const end = data.indexOf('"', start + 6);
   var list = data.substring(start + 5, end);

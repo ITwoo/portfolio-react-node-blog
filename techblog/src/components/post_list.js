@@ -107,7 +107,7 @@ const Post_list = () => {
       const category = p.Category && p.Category !== undefined ? p.Category.kinds : ''
       const id = "/post/" + p.id;
       // console.log(p.Images);
-      const src = p.Images !== undefined ? p.Images[0] && p.Images[0].src : 'https://via.placeholder.com/250x150/00CED1/000000';
+      const src = p.Images !== undefined ? p.Images[0] && p.Images[p.Images.length-1].src : 'https://via.placeholder.com/250x150/00CED1/000000';
       let content = '';
       let title = '';
       const index = p.content.indexOf("<h1");
