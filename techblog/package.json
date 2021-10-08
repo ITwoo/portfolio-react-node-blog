@@ -2,6 +2,7 @@
   "name": "techblog",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://itwoo.github.io/portfolio-react-node-blog",
   "dependencies": {
     "@babel/core": "7.12.3",
     "@ckeditor/ckeditor5-alignment": "^29.0.0",
