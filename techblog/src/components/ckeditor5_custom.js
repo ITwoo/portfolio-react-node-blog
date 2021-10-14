@@ -12,6 +12,7 @@ import { ADD_POST_REQUEST, UPDATE_POST_REQUEST } from '../actionTypes/post';
 
 import '../css/ckeditor5_custom.css';
 import ModalComponent from './modal';
+import { LOAD_USER_REQUEST } from '../actionTypes/user';
 
 
 const Ckeditor5_custom = ({ post, id }) => {
@@ -24,16 +25,22 @@ const Ckeditor5_custom = ({ post, id }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('render')
+    dispatch({
+      type: LOAD_USER_REQUEST
+    })
     if(post){
       setCategory(post.Category.kinds)
       console.log(post)
     }
+  },[]);
 
+  useEffect(() => {
+    console.log('render')
     if(info === null){
+      alert('로그인후 사용가능합니다.')
       history.push('/')
     }
-  },[])
+  },[info])
 
   const onWrite = useCallback(() => {
     if (id === undefined) {

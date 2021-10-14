@@ -4,6 +4,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { Op } = require('sequelize');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
 
 const { Post, Image, Category, User } = require('../models');
 const { isLoggedIn } = require('./middlewares');
@@ -16,6 +19,18 @@ try { // uploads 폴더 확인 및 생성코드 - 2021 10 04 ITwoo
   console.log('uploads 폴더가 없으므로 생성합니다.')
   fs.mkdirSync('uploads');
 }
+
+// const storage = new CloudinaryStorage({
+//   cloudinary: cloudinary,
+//   params: {
+//     folder: 'uploads',
+//     format: async (req, file) => {
+//       const ext = path.extname(file.originalname);
+//       return ext;
+//     },
+//     public_id: (req, file) => 'techblog'
+//   }
+// })
 
 const storage = multer.diskStorage({ // multer를 사용해 이미지 업로드 - 2021 10 04 ITwoo
   destination: function (req, file, cb) {
@@ -32,9 +47,9 @@ const upload = multer({
   storage: storage
 });
 
-router.get('/', (req, res, next) => {
-  res.send('hello post')
-});
+// router.get('/', (req, res, next) => {
+//   res.send('hello post')
+// });
 
 router.post('/write', isLoggedIn, async (req, res, next) => { //글 쓰기  - 2021 09 04 ITwoo
   const data = req.body.content;
@@ -73,10 +88,11 @@ router.post('/write', isLoggedIn, async (req, res, next) => { //글 쓰기  - 20
   res.status(201).json(fullPost);
 });
 
-router.post('/content', async (req, res, next) => { //read one
-  console.log(req.body)
+router.get('/content/:id', async (req, res, next) => { //read one
+  console.log('a')
+  console.log(req.params.id)
   const post = await Post.findOne({
-    where: { id: req.body.id },
+    where: { id: req.params.id },
     include: [{
       model: Image
     }, {
@@ -87,7 +103,7 @@ router.post('/content', async (req, res, next) => { //read one
   res.status(201).json(post);
 });
 
-router.post('/contents', async (req, res, next) => { //read many
+router.get('/contents', async (req, res, next) => { //read many
   // if(req.body.id === 0){
   //   where = {}
   // } else {
@@ -110,7 +126,7 @@ router.post('/contents', async (req, res, next) => { //read many
   res.status(201).json(fullPost);
 });
 
-router.post('/update', isLoggedIn, async (req, res, next) => {
+router.put('/:id', isLoggedIn, async (req, res, next) => {
   console.log(req.body.content)
   const data = req.body.content;
   const index = data.lastIndexOf("<img");
@@ -124,14 +140,14 @@ router.post('/update', isLoggedIn, async (req, res, next) => {
 
   const post = await Post.update({ content: req.body.content, CategoryId: category.id }, {
     where: {
-      id: req.body.id
+      id: req.params.id
     }
   });
   if (index !== -1) {
     await Image.destroy({
-    where: { src: 'https://via.placeholder.com/250x150/00CED1/000000', PostId: req.body.id }
+    where: { src: 'https://via.placeholder.com/250x150/00CED1/000000', PostId: req.params.id }
   });
-    await Image.findOrCreate({ where: {src: list, PostId: req.body.id} });
+    await Image.findOrCreate({ where: {src: list, PostId: req.params.id} });
   }
   const fullPost = await Post.findAll({
     include: [{
@@ -149,10 +165,10 @@ router.post('/update', isLoggedIn, async (req, res, next) => {
   res.status(201).json(fullPost);
 });
 
-router.post('/delete', isLoggedIn, async (req, res, next) => {
+router.delete('/:id', isLoggedIn, async (req, res, next) => {
   await Post.destroy({
     where: {
-      id: req.body.id
+      id: req.params.id
     }
   });
 

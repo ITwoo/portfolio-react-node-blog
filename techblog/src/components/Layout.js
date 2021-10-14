@@ -7,6 +7,7 @@ import { LOAD_USER_REQUEST, LOGOUT_REQUEST } from '../actionTypes/user';
 
 const Layout = ({ children }) => {
   const history = useHistory();
+  
   const dispatch = useDispatch();
   const info = useSelector((state) => state.user.info)
   const toggleRef = useRef();

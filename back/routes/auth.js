@@ -60,7 +60,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => { // 로그인 - 2021 1
   })(req, res, next);
 });
 
-router.get('/logout', isLoggedIn, (req, res) =>{ // 로그아웃 - 2021 10 04 ITwoo
+router.delete('/logout', isLoggedIn, (req, res) =>{ // 로그아웃 - 2021 10 04 ITwoo
   req.logout();
   req.session.destroy();
   res.status(200).send('LOGOUT')

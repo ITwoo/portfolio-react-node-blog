@@ -42,7 +42,7 @@ function* addPost(action) {
 }
 
 function updatePostApi(data) {
-  return axios.post("/post/update", data);
+  return axios.put(`/post/${data.id}`, data);
 }
 
 function* updatePost(action) {
@@ -64,7 +64,7 @@ function* updatePost(action) {
 }
 
 function loadPostApi(data) {
-  return axios.post("/post/content", data);
+  return axios.get(`/post/content/${data.id}`);
 }
 
 function* loadPost(action) {
@@ -86,7 +86,7 @@ function* loadPost(action) {
 }
 
 function loadPostsApi(data) {
-  return axios.post("/post/contents",data);
+  return axios.get("/post/contents",data);
 }
 
 function* loadPosts(action) {
@@ -108,7 +108,7 @@ function* loadPosts(action) {
 }
 
 function removePostApi(data) {
-  return axios.post("/post/delete", data);
+  return axios.delete(`/post/${data.id}`);
 }
 
 function* removePost(action) {

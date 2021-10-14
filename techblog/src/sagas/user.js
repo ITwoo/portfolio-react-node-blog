@@ -28,7 +28,7 @@ function* logInUser(action) {
 }
 
 function logOutUserApi() {
-  return axios.get("/auth/logout");
+  return axios.delete("/auth/logout");
 }
 
 
