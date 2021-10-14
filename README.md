@@ -26,5 +26,6 @@ Heroku 배포 시작 - clearDB사용
 Cloudinary를 사용해 해결
 
 ---------------------2021 10 14 ----------------------------
+
 back-end server restfull api 적용
 글 쓰기관련 로그인 확인부분 에러발견 후 useEffect를 나눠 해결
