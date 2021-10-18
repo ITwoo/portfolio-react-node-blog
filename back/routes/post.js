@@ -52,10 +52,10 @@ const upload = multer({
 // });
 
 router.post('/write', isLoggedIn, async (req, res, next) => { //글 쓰기  - 2021 09 04 ITwoo
-  const data = req.body.content;
+  const data = req.body.content; // 데이터 받는 부분 
   const ctgr = req.body.category;
   console.log(req.body);
-  const index = data.indexOf("<img");
+  const index = data.indexOf("<img"); // 이미지 부분 추출
   const start = data.indexOf('src="', index + 1);
   const end = data.indexOf('"', start + 6);
   var list = data.substring(start + 5, end);
@@ -76,7 +76,7 @@ router.post('/write', isLoggedIn, async (req, res, next) => { //글 쓰기  - 20
   console.log(category)
   console.log(created)
   await category.addPost(post);
-  const fullPost = await Post.findAll({
+  const fullPost = await Post.findAll({ //글 db에 넣은후 응답
     include: [{
       model: Image
     }, {
@@ -89,7 +89,6 @@ router.post('/write', isLoggedIn, async (req, res, next) => { //글 쓰기  - 20
 });
 
 router.get('/content/:id', async (req, res, next) => { //read one
-  console.log('a')
   console.log(req.params.id)
   const post = await Post.findOne({
     where: { id: req.params.id },
@@ -126,10 +125,10 @@ router.get('/contents', async (req, res, next) => { //read many
   res.status(201).json(fullPost);
 });
 
-router.put('/:id', isLoggedIn, async (req, res, next) => {
+router.put('/:id', isLoggedIn, async (req, res, next) => {// 글수정 - 2021 10 18 ITWoo
   console.log(req.body.content)
   const data = req.body.content;
-  const index = data.lastIndexOf("<img");
+  const index = data.lastIndexOf("<img"); // 나중에들어온 이미지 추출
   const start = data.indexOf('src="', index + 1);
   const end = data.indexOf('"', start + 6);
   var list = data.substring(start + 5, end);
@@ -149,7 +148,7 @@ router.put('/:id', isLoggedIn, async (req, res, next) => {
   });
     await Image.findOrCreate({ where: {src: list, PostId: req.params.id} });
   }
-  const fullPost = await Post.findAll({
+  const fullPost = await Post.findAll({ // 수정후 응답
     include: [{
       model: Image
     }, {
@@ -165,7 +164,7 @@ router.put('/:id', isLoggedIn, async (req, res, next) => {
   res.status(201).json(fullPost);
 });
 
-router.delete('/:id', isLoggedIn, async (req, res, next) => {
+router.delete('/:id', isLoggedIn, async (req, res, next) => { // 글 삭제 - 2021 10 18 ITwoo
   await Post.destroy({
     where: {
       id: req.params.id
@@ -182,12 +181,13 @@ router.delete('/:id', isLoggedIn, async (req, res, next) => {
       attributes: {
         exclude: ['password']
       }
-    }]
+    }],
+    order: [['id', 'DESC']]
   });
   res.status(201).json(fullPost);
 });
 
-router.post('/images', upload.single('upload'), (req, res, next) => {
+router.post('/images', upload.single('upload'), (req, res, next) => { // 이미지 다운로드 - 2021 10 18 ITwoo
   const url = 'http://localhost:8080/' + req.file.filename;
   res.send({ url: url })
 });

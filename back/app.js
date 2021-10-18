@@ -28,7 +28,7 @@ db.sequelize.sync()
 passportConfig();
 
 // app.use(morgan('dev'));
-app.use(cors({
+app.use(cors({ // corss origin resorce sharing
   origin: 'http://localhost:3000',
   credentials: true,
 }
@@ -39,18 +39,30 @@ app.use('/', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+// app.use(session({
+//   saveUninitialized: false,
+//   resave: false,
+//   secret: process.env.COOKIE_SECRET,
+//   cookie: { 
+//     secure: false,
+//     maxAge: 1000 * 60 * 10,
+//   }
+// }));
 app.use(session({
   saveUninitialized: false,
   resave: false,
   secret: process.env.COOKIE_SECRET,
+  proxy: true,
   cookie: { 
-    secure: false,
+    httpOnly: true,
+    secure: true,
     maxAge: 1000 * 60 * 10,
+    sameSite: "none",
   }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(flash());
+app.use(flash());
 
 app.get('/', (req, res, next) => {
   res.send('hello express');
