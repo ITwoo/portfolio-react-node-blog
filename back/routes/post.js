@@ -59,47 +59,56 @@ router.post('/write', isLoggedIn, async (req, res, next) => { //글 쓰기  - 20
   const start = data.indexOf('src="', index + 1);
   const end = data.indexOf('"', start + 6);
   var list = data.substring(start + 5, end);
-  const post = await Post.create({
-    content: data,
-    UserId: req.user.id,
-  });
-  if (index !== -1) {
-    const image = await Image.create({ src: list });
-    await post.addImages(image);
-  } else {
-    const image = await Image.create({ src: 'https://via.placeholder.com/250x150/00CED1/000000' });
-    await post.addImages(image);
+  try {
+    const post = await Post.create({
+      content: data,
+      UserId: req.user.id,
+    });
+    if (index !== -1) {
+      const image = await Image.create({ src: list });
+      await post.addImages(image);
+    } else {
+      const image = await Image.create({ src: 'https://via.placeholder.com/250x150/00CED1/000000' });
+      await post.addImages(image);
+    }
+    const [category, created] = await Category.findOrCreate({
+      where: { kinds: ctgr },
+    })
+    console.log(category)
+    console.log(created)
+    await category.addPost(post);
+    const fullPost = await Post.findAll({ //글 db에 넣은후 응답
+      include: [{
+        model: Image
+      }, {
+        model: Category
+      }],
+      order: [['id', 'DESC']]
+    });
+    // const fullPost = await Post.findAll();  
+    res.status(201).json(fullPost);
+  } catch (err) {
+    res.status(500).send('잠시후 다시 시도해 주세요.')
   }
-  const [category, created] = await Category.findOrCreate({
-    where: { kinds: ctgr },
-  })
-  console.log(category)
-  console.log(created)
-  await category.addPost(post);
-  const fullPost = await Post.findAll({ //글 db에 넣은후 응답
-    include: [{
-      model: Image
-    }, {
-      model: Category
-    }],
-    order: [['id', 'DESC']]
-  });
-  // const fullPost = await Post.findAll();  
-  res.status(201).json(fullPost);
 });
 
 router.get('/content/:id', async (req, res, next) => { //read one
   console.log(req.params.id)
-  const post = await Post.findOne({
-    where: { id: req.params.id },
-    include: [{
-      model: Image
-    }, {
-      model: Category
-    }]
-  });
-  // console.log(fullPost)
-  res.status(201).json(post);
+  try {
+
+    const post = await Post.findOne({
+      where: { id: req.params.id },
+      include: [{
+        model: Image
+      }, {
+        model: Category
+      }]
+    });
+    // console.log(fullPost)
+    res.status(201).json(post);
+  } catch (err) {
+    res.status(500).send('잠시후 다시 시도해 주세요.')
+  }
 });
 
 router.get('/contents', async (req, res, next) => { //read many
@@ -113,16 +122,20 @@ router.get('/contents', async (req, res, next) => { //read many
   //   }
   // }
   // console.log(req.body)
-  const fullPost = await Post.findAll({
-    include: [{
-      model: Image
-    }, {
-      model: Category
-    }],
-    order: [['id', 'DESC']]
-  });
-  // console.log(fullPost)
-  res.status(201).json(fullPost);
+  try {
+    const fullPost = await Post.findAll({
+      include: [{
+        model: Image
+      }, {
+        model: Category
+      }],
+      order: [['id', 'DESC']]
+    });
+    // console.log(fullPost)
+    res.status(201).json(fullPost);
+  } catch (err) {
+    res.status(500).send('잠시후 다시 시도해 주세요.')
+  }
 });
 
 router.put('/:id', isLoggedIn, async (req, res, next) => {// 글수정 - 2021 10 18 ITWoo
@@ -133,58 +146,66 @@ router.put('/:id', isLoggedIn, async (req, res, next) => {// 글수정 - 2021 10
   const end = data.indexOf('"', start + 6);
   var list = data.substring(start + 5, end);
   console.log(list)
-  const [category, created] = await Category.findOrCreate({
-    where: { kinds: req.body.category },
-  });
+  try {
+    const [category, created] = await Category.findOrCreate({
+      where: { kinds: req.body.category },
+    });
 
-  const post = await Post.update({ content: req.body.content, CategoryId: category.id }, {
-    where: {
-      id: req.params.id
-    }
-  });
-  if (index !== -1) {
-    await Image.destroy({
-    where: { src: 'https://via.placeholder.com/250x150/00CED1/000000', PostId: req.params.id }
-  });
-    await Image.findOrCreate({ where: {src: list, PostId: req.params.id} });
-  }
-  const fullPost = await Post.findAll({ // 수정후 응답
-    include: [{
-      model: Image
-    }, {
-      model: Category
-    }, {
-      model: User,
-      attributes: {
-        exclude: ['password']
+    const post = await Post.update({ content: req.body.content, CategoryId: category.id }, {
+      where: {
+        id: req.params.id
       }
-    }],
-    order: [['id', 'DESC']]
-  });
-  res.status(201).json(fullPost);
+    });
+    if (index !== -1) {
+      await Image.destroy({
+        where: { src: 'https://via.placeholder.com/250x150/00CED1/000000', PostId: req.params.id }
+      });
+      await Image.findOrCreate({ where: { src: list, PostId: req.params.id } });
+    }
+    const fullPost = await Post.findAll({ // 수정후 응답
+      include: [{
+        model: Image
+      }, {
+        model: Category
+      }, {
+        model: User,
+        attributes: {
+          exclude: ['password']
+        }
+      }],
+      order: [['id', 'DESC']]
+    });
+    res.status(201).json(fullPost);
+  } catch (err) {
+    res.status(500).send('잠시후 다시 시도해 주세요.')
+  }
 });
 
 router.delete('/:id', isLoggedIn, async (req, res, next) => { // 글 삭제 - 2021 10 18 ITwoo
-  await Post.destroy({
-    where: {
-      id: req.params.id
-    }
-  });
-
-  const fullPost = await Post.findAll({
-    include: [{
-      model: Image
-    }, {
-      model: Category
-    }, {
-      model: User,
-      attributes: {
-        exclude: ['password']
+  try {
+    await Post.destroy({
+      where: {
+        id: req.params.id
       }
-    }],
-    order: [['id', 'DESC']]
-  });
-  res.status(201).json(fullPost);
+    });
+
+    const fullPost = await Post.findAll({
+      include: [{
+        model: Image
+      }, {
+        model: Category
+      }, {
+        model: User,
+        attributes: {
+          exclude: ['password']
+        }
+      }],
+      order: [['id', 'DESC']]
+    });
+    res.status(201).json(fullPost);
+  } catch (err) {
+    res.status(500).send('잠시후 다시 시도해 주세요.')
+  }
 });
 
 router.post('/images', upload.single('upload'), (req, res, next) => { // 이미지 다운로드 - 2021 10 18 ITwoo
