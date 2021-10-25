@@ -20,6 +20,7 @@ const Ckeditor5_custom = ({ post, id }) => {
   const info = useSelector((state) => state.user.info);
   const [category, setCategory] = useState('카테고리 없음');
   const [content, setContent] = useState('');
+  let text = '';
   const [CKBool, setCKBool] = useState(true);
   // const post = useSelector((state) => state.post);
   const dispatch = useDispatch();
@@ -43,6 +44,8 @@ const Ckeditor5_custom = ({ post, id }) => {
   },[info])
 
   const onWrite = useCallback(() => {
+    console.log(text + "text")
+    setContent(text);
     if (id === undefined) {
       dispatch({
         type: ADD_POST_REQUEST,
@@ -83,14 +86,15 @@ const Ckeditor5_custom = ({ post, id }) => {
           }
         }}
         onChange={(event, editor) => {
-          setContent(editor.getData());
-          console.log(category)
-          console.log(content)
+          
+          // console.log(category)
+          // console.log(text)
           // setCategory(editor)
           // console.log({ event, editor, data });
         }}
         onBlur={(event, editor) => {
           // console.log({ event, editor, data })
+          setContent(editor.getData());
         }}
         />
       }

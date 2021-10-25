@@ -39,27 +39,28 @@ app.use('/', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-// app.use(session({
-//   saveUninitialized: false,
-//   resave: false,
-//   secret: process.env.COOKIE_SECRET,
-//   cookie: { 
-//     secure: false,
-//     maxAge: 1000 * 60 * 10,
-//   }
-// }));
 app.use(session({
   saveUninitialized: false,
   resave: false,
   secret: process.env.COOKIE_SECRET,
-  proxy: true,
   cookie: { 
-    httpOnly: true,
-    secure: true,
+    secure: false,
     maxAge: 1000 * 60 * 10,
-    sameSite: "none",
   }
 }));
+//실제 배포 서버 설정
+// app.use(session({
+//   saveUninitialized: false,
+//   resave: false,
+//   secret: process.env.COOKIE_SECRET,
+//   // proxy: true,
+//   cookie: { 
+//     httpOnly: true,
+//     secure: true,
+//     maxAge: 1000 * 60 * 10,
+//     sameSite: "none",
+//   }
+// }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

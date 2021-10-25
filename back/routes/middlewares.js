@@ -3,7 +3,6 @@ exports.isLoggedIn = (req, res, next) => { // 로그인이 필수 일경우 - 20
   if(req.isAuthenticated()){
     next();
   } else {
-    console.log('error')
     res.status(403).send('로그인 필요');
   }
 };
