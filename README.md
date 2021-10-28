@@ -44,5 +44,3 @@ back-end server restfull api 적용
 css url로 지정한 서버 다운
 
 css 수정 완료
-=======
->>>>>>> f0ba954d00cab4f251310f4463c2fa6c461f70d5
