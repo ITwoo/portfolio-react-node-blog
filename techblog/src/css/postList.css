@@ -93,7 +93,9 @@
 }
 
 .line-item  {
-  background: url("https://bootdey.com/img/Content/border-top-dotted.gif") repeat-x scroll left bottom rgba(0, 0, 0, 0);
+  /* background: url("https://bootdey.com/img/Content/border-top-dotted.gif") repeat-x scroll left bottom rgba(0, 0, 0, 0); */
+  /* background: url("http://bootply.com/assets/example/bg_suburb.jpg") repeat-x scroll left bottom rgba(0, 0, 0, 0); */
+  border-bottom: 1px solid #eee;
   margin: 0 0 0 30px;
   padding: 25px 0 15px;
   min-height: 200px;
