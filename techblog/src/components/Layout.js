@@ -82,9 +82,9 @@ const Layout = ({ children }) => {
             <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/list/React">React</Link>
             <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/list/Node">Node</Link>
             <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/list/JavaScript">JavaScript</Link>
-            <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="#!">Events</Link>
-            <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="#!">Profile</Link>
-            <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/test">Test</Link>
+            <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="#!">HTML</Link>
+            <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="#!">CSS</Link>
+            <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/test">MYSQL</Link>
           </div>
         </div>
         <div id="page-content-wrapper">
@@ -106,11 +106,11 @@ const Layout = ({ children }) => {
                   <li className="nav-item dropdown">
                     <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ref={dropDownRef} onClick={onDropDownChange}>글 관리</Link>
                     <div className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" ref={dropDownMenuRef}>
-                      <Link className="dropdown-item" to="/revise">글 수정</Link>
+                      {/* <Link className="dropdown-item" to="/revise">글 수정</Link> */}
                       <Link className="dropdown-item" to="/write">글 쓰기</Link>
-                      <Link className="dropdown-item" to="/delete">글 삭제</Link>
+                      {/* <Link className="dropdown-item" to="/delete">글 삭제</Link> */}
                       <div className="dropdown-divider"></div>
-                      <a className="dropdown-item" href="#!">Something else here</a>
+                      {/* <a className="dropdown-item" href="#!">Something else here</a> */}
                     </div>
                   </li>
                 </ul>
