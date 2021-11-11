@@ -1,6 +1,6 @@
-Back-End Server : Node.js (Express.js)
+Back-End Server : Node.js (Express.js, sequeilze, passport ...) rest ful api
 
-Front-end Server: React (Hook)
+Front-end Server: React (react-hook, redux, redux-saga) 
 
 Make Project : Blog 
 
