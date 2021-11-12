@@ -33,3 +33,4 @@ yarn-error.log*
 uploads
 node_modules
 config
+tech-blog.pem
