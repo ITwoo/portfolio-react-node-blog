@@ -1,9 +1,3 @@
-Back-End Server : Node.js (Express.js, sequeilze, passport ...) rest ful api
-
-Front-end Server: React (react-hook, redux, redux-saga) 
-
-Make Project : Blog 
-
 배포 서버 : https://font-techblog.herokuapp.com/list
 
 heroku 특성상 일정 시간 미 접속시 서버가 자동으로 꺼지기때문에 초기 서버 켜지는 시간이 길어 초기 접속시 시간이 오래걸릴수 있습니다. (20 -30s)
@@ -14,7 +8,57 @@ front-end back-end 서버가 따로 있기 때문에 초기 접속후 데이터 
 
 이미지는 cloudinary를 이용하고 있습니다.
 
-back-end 는 api 형식으로 구현 React서버와 nodejs서버를 각각 한대씩 두대로 운영 중
+간단한 쓰기 수정 삭제 보기 기능이있는 게시판 입니다. 처음부터 끝까지 혼자 직접 코딩한 프로젝트입니다.
+
+백앤드 서버와 프론트 앤드 서버 각 각 하나씩 배포하였으며 api 형태로 데이터를 주고 받습니다.
+
+DB: MYSQL
+
+Back-End Server : Node.js (Express.js, sequeilze, passport ...) rest ful api 형식를 70%정도 지켰습니다. 
+
+Front-end Server: React (react-hook, redux, redux-saga) 
+
+MYSQL : 게시판 특성상 데이터 손실이 없고 스키마가 크게 변경될 일이 없어 선택했습니다.
+
+nodejs: javascript기반으로 풀스택 개발을 목적으로 선택했습니다.
+
+Express : nodejs로 웹 서버 개발시 가장 많이 사용되는 웹 프래임워크로 가장 개발자 풀이 넓고 가벼워 선택했습니다.
+
+sequelize : DBMS의 종속성을 줄이고 재사용 및 유지보수의 편리성을 위해 사용했습니다.
+
+passport : 쿠키와 세션으로 로그인을 구현할 계획에 적합하여 사용했습니다. 보다 간편하게 인증을 구현할 수 있습니다.
+
+bcrypt : Blowfish를 사용했으며 sha형식으 보안보다 보안성이 뛰어나다고 생각해 사용했습니다. 데이터를 처리하는데 오래걸리고 자원이 많이필요한만큼 더 보안성이 좋다는게 장점입니다.
+
+React : SPA 웹 프론트앤드 개발을 하기위한 라이브러리로 많이 사용되는 언어로 자유도가 높고 컴포넌트 분리로인한 재사용성이 높으며 추후 타입스크립트로 이어 지기위해 선택했습니다.
+
+hook : class형식에 비해 재사용성과 성능이 높고 class형태의 코드보다 가독성이 좋습니다. 
+
+redux : 불필요한 랜더링을 없애고 상태를 좀더 관리하기 쉽게하기위해 사용했습니다. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---------------------2021 10 08-----------------------------
 
