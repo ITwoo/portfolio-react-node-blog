@@ -150,10 +150,12 @@ function* watchRemovePost() {
 }
 
 
-export default function* userTicketSaga() {
-  yield all([fork(watchAddPost)]);
-  yield all([fork(watchUpdatePost)]);
-  yield all([fork(watchLoadPost)]);
-  yield all([fork(watchLoadPosts)]);
-  yield all([fork(watchRemovePost)]);
+export default function* postSaga() {
+  yield all ([
+    fork(watchAddPost),
+    fork(watchUpdatePost),
+    fork(watchLoadPost),
+    fork(watchLoadPosts),
+    fork(watchRemovePost)
+  ])
 }

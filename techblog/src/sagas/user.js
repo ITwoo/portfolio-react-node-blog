@@ -112,10 +112,12 @@ function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
-export default function* userTicketSaga() {
-  yield all([fork(watchLogIn)]);
-  yield all([fork(watchJoin)]);
-  yield all([fork(watchLogOut)]);
-  yield all([fork(watchLoadUser)]);
+export default function* userSaga() {
+  yield all ([
+    fork(watchLogIn),
+    fork(watchJoin),
+    fork(watchLogOut),
+    fork(watchLoadUser)
+  ])
 
 }
